@@ -4,10 +4,12 @@ import { ArticleCard } from "@/components/ArticleCard";
 import { PortalSidebar } from "@/components/PortalSidebar";
 import { Footer } from "@/components/Footer";
 import { articles } from "@/lib/mockData";
+import { useDialect } from "@/contexts/DialectContext";
 
 const Index = () => {
   const featured = articles[0];
   const rest = articles.slice(1);
+  const { t } = useDialect();
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -23,7 +25,7 @@ const Index = () => {
           {/* Content grid */}
           <section>
             <h2 className="text-2xl font-serif font-bold text-foreground mb-6">
-              Најновије
+              {t("Најновије")}
             </h2>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6">

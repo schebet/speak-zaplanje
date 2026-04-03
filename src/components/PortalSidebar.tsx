@@ -1,5 +1,6 @@
 import { Article, categoryColorMap } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { useDialect } from "@/contexts/DialectContext";
 
 const dotClasses: Record<string, string> = {
   "cat-news": "bg-cat-news",
@@ -15,12 +16,13 @@ interface PortalSidebarProps {
 }
 
 export function PortalSidebar({ articles }: PortalSidebarProps) {
+  const { t } = useDialect();
   const top5 = articles.slice(0, 5);
 
   return (
     <div className="bg-card rounded-lg border border-border p-5">
       <h3 className="font-serif font-bold text-lg text-foreground mb-4 pb-2 border-b border-border">
-        Најчитаније
+        {t("Најчитаније")}
       </h3>
       <ol className="space-y-4">
         {top5.map((article, i) => (
@@ -36,10 +38,10 @@ export function PortalSidebar({ articles }: PortalSidebarProps) {
                     dotClasses[categoryColorMap[article.category]]
                   )}
                 />
-                <span className="text-xs text-muted-foreground">{article.category}</span>
+                <span className="text-xs text-muted-foreground">{t(article.category)}</span>
               </div>
               <p className="text-sm font-medium text-foreground leading-snug line-clamp-2 group-hover:text-accent-foreground transition-colors">
-                {article.title}
+                {t(article.title)}
               </p>
             </div>
           </li>

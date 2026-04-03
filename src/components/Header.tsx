@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Menu, X, Globe } from "lucide-react";
 import { Category, DialectZone } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { useDialect } from "@/contexts/DialectContext";
 
 const categories: { name: Category; colorClass: string }[] = [
   { name: "Вести", colorClass: "text-cat-news hover:text-cat-news/80" },
@@ -16,7 +17,7 @@ const dialects: DialectZone[] = ["Стандардни", "Зона I", "Зона
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [dialect, setDialect] = useState<DialectZone>("Стандардни");
+  const { dialect, setDialect, t } = useDialect();
 
   return (
     <header className="bg-card border-b border-border">
@@ -30,7 +31,7 @@ export function Header() {
                 Заплање
               </h1>
               <p className="text-[10px] md:text-xs font-sans font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-                Локални портал
+                {t("Локални портал")}
               </p>
             </div>
           </div>
@@ -71,7 +72,7 @@ export function Header() {
               href="#"
               className={cn("text-sm font-semibold transition-colors", cat.colorClass)}
             >
-              {cat.name}
+              {t(cat.name)}
             </a>
           ))}
         </nav>
@@ -86,7 +87,7 @@ export function Header() {
                   href="#"
                   className={cn("text-sm font-semibold py-1", cat.colorClass)}
                 >
-                  {cat.name}
+                  {t(cat.name)}
                 </a>
               ))}
             </nav>
