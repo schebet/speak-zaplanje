@@ -20,6 +20,7 @@ const dialects: DialectZone[] = ["Стандардни", "Зона I", "Зона
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { dialect, setDialect, t } = useDialect();
+  const { user, role } = useAuth();
 
   return (
     <header className="bg-card border-b border-border">
