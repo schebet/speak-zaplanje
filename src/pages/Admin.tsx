@@ -284,13 +284,13 @@ const Admin = () => {
                     {article.category}
                   </span>
                   {article.is_published ? (
-                    <Eye className="h-3 w-3 text-green-500" />
+                    <Eye className="h-3 w-3 text-cat-tradition" />
                   ) : (
                     <EyeOff className="h-3 w-3 text-muted-foreground" />
                   )}
                   {article.is_featured && <Star className="h-3 w-3 text-accent" />}
                   {article.title_zone1 && (
-                    <span className="text-[10px] px-1.5 py-0.5 bg-green-100 text-green-700 rounded">AI преведено</span>
+                    <span className="text-[10px] px-1.5 py-0.5 bg-secondary text-cat-tradition rounded">AI преведено</span>
                   )}
                 </div>
                 <h4 className="font-serif font-bold text-foreground text-sm truncate">{article.title}</h4>
