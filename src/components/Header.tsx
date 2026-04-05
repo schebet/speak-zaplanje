@@ -39,23 +39,33 @@ export function Header() {
             </div>
           </div>
 
-          {/* Dialect toggle - desktop */}
-          <div className="hidden md:flex items-center gap-1 bg-secondary rounded-lg p-1">
-            <Globe className="h-4 w-4 text-muted-foreground mr-1" />
-            {dialects.map((d) => (
-              <button
-                key={d}
-                onClick={() => setDialect(d)}
-                className={cn(
-                  "px-3 py-1 text-xs font-medium rounded-md transition-colors",
-                  dialect === d
-                    ? "bg-primary text-primary-foreground"
-                    : "text-muted-foreground hover:text-foreground"
-                )}
-              >
-                {d}
-              </button>
-            ))}
+          <div className="hidden md:flex items-center gap-3">
+            <div className="flex items-center gap-1 bg-secondary rounded-lg p-1">
+              <Globe className="h-4 w-4 text-muted-foreground mr-1" />
+              {dialects.map((d) => (
+                <button
+                  key={d}
+                  onClick={() => setDialect(d)}
+                  className={cn(
+                    "px-3 py-1 text-xs font-medium rounded-md transition-colors",
+                    dialect === d
+                      ? "bg-primary text-primary-foreground"
+                      : "text-muted-foreground hover:text-foreground"
+                  )}
+                >
+                  {d}
+                </button>
+              ))}
+            </div>
+            {(role === "admin" || role === "editor") ? (
+              <Link to="/admin" className="flex items-center gap-1 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors">
+                <Settings className="h-4 w-4" /> CMS
+              </Link>
+            ) : (
+              <Link to="/login" className="text-xs font-medium text-muted-foreground hover:text-foreground transition-colors">
+                Пријава
+              </Link>
+            )}
           </div>
 
           {/* Mobile menu button */}
