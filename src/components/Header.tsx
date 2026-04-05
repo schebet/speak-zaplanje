@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { Menu, X, Globe } from "lucide-react";
+import { Menu, X, Globe, Settings } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Category, DialectZone } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { useDialect } from "@/contexts/DialectContext";
+import { useAuth } from "@/hooks/useAuth";
 
 const categories: { name: Category; colorClass: string }[] = [
   { name: "Вести", colorClass: "text-cat-news hover:text-cat-news/80" },
