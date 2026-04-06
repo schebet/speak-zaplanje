@@ -1,4 +1,5 @@
 import { Clock, User } from "lucide-react";
+import { Link } from "react-router-dom";
 import { CategoryBadge } from "./CategoryBadge";
 import type { DisplayArticle } from "@/pages/Index";
 
@@ -8,7 +9,7 @@ interface ArticleCardProps {
 
 export function ArticleCard({ article }: ArticleCardProps) {
   return (
-    <div className="bg-card rounded-lg overflow-hidden border border-border shadow-sm hover:shadow-md transition-shadow cursor-pointer group">
+    <Link to={`/article/${article.id}`} className="bg-card rounded-lg overflow-hidden border border-border shadow-sm hover:shadow-md transition-shadow cursor-pointer group block">
       <div className="aspect-video overflow-hidden">
         <img
           src={article.imageUrl}
@@ -37,6 +38,6 @@ export function ArticleCard({ article }: ArticleCardProps) {
           </span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

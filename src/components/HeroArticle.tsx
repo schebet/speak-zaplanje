@@ -1,5 +1,6 @@
 import { CategoryBadge } from "./CategoryBadge";
 import { Clock, User } from "lucide-react";
+import { Link } from "react-router-dom";
 import type { DisplayArticle } from "@/pages/Index";
 
 interface HeroArticleProps {
@@ -8,7 +9,7 @@ interface HeroArticleProps {
 
 export function HeroArticle({ article }: HeroArticleProps) {
   return (
-    <div className="relative rounded-xl overflow-hidden group cursor-pointer">
+    <Link to={`/article/${article.id}`} className="relative rounded-xl overflow-hidden group cursor-pointer block">
       <div className="aspect-[21/9] md:aspect-[3/1]">
         <img
           src={article.imageUrl}
@@ -38,6 +39,6 @@ export function HeroArticle({ article }: HeroArticleProps) {
           </span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
