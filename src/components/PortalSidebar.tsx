@@ -1,6 +1,7 @@
-import { Article, categoryColorMap } from "@/lib/types";
+import { categoryColorMap, Category } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { useDialect } from "@/contexts/DialectContext";
+import type { DisplayArticle } from "@/pages/Index";
 
 const dotClasses: Record<string, string> = {
   "cat-news": "bg-cat-news",
@@ -12,7 +13,7 @@ const dotClasses: Record<string, string> = {
 };
 
 interface PortalSidebarProps {
-  articles: Article[];
+  articles: DisplayArticle[];
 }
 
 export function PortalSidebar({ articles }: PortalSidebarProps) {
@@ -35,13 +36,13 @@ export function PortalSidebar({ articles }: PortalSidebarProps) {
                 <span
                   className={cn(
                     "w-2 h-2 rounded-full flex-shrink-0",
-                    dotClasses[categoryColorMap[article.category]]
+                    dotClasses[categoryColorMap[article.category as Category] || "cat-news"]
                   )}
                 />
-                <span className="text-xs text-muted-foreground">{t(article.category)}</span>
+                <span className="text-xs text-muted-foreground">{article.category}</span>
               </div>
               <p className="text-sm font-medium text-foreground leading-snug line-clamp-2 group-hover:text-accent-foreground transition-colors">
-                {t(article.title)}
+                {article.title}
               </p>
             </div>
           </li>
