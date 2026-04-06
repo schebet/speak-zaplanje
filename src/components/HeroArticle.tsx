@@ -1,15 +1,12 @@
-import { Article } from "@/lib/types";
 import { CategoryBadge } from "./CategoryBadge";
 import { Clock, User } from "lucide-react";
-import { useDialect } from "@/contexts/DialectContext";
+import type { DisplayArticle } from "@/pages/Index";
 
 interface HeroArticleProps {
-  article: Article;
+  article: DisplayArticle;
 }
 
 export function HeroArticle({ article }: HeroArticleProps) {
-  const { t } = useDialect();
-
   return (
     <div className="relative rounded-xl overflow-hidden group cursor-pointer">
       <div className="aspect-[21/9] md:aspect-[3/1]">
@@ -24,10 +21,10 @@ export function HeroArticle({ article }: HeroArticleProps) {
       <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
         <CategoryBadge category={article.category} className="mb-3" />
         <h2 className="text-xl md:text-3xl font-serif font-bold text-primary-foreground leading-tight mb-3">
-          {t(article.title)}
+          {article.title}
         </h2>
         <p className="text-sm md:text-base text-primary-foreground/80 mb-4 max-w-2xl line-clamp-2">
-          {t(article.excerpt)}
+          {article.excerpt}
         </p>
         <div className="flex items-center gap-4 text-xs text-primary-foreground/70">
           <span className="flex items-center gap-1">
@@ -37,7 +34,7 @@ export function HeroArticle({ article }: HeroArticleProps) {
           <span>{article.date}</span>
           <span className="flex items-center gap-1">
             <Clock className="h-3 w-3" />
-            {t(article.readTime)}
+            {article.readTime}
           </span>
         </div>
       </div>

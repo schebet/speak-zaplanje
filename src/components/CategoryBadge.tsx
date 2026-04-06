@@ -11,12 +11,12 @@ const colorClasses: Record<string, string> = {
 };
 
 interface CategoryBadgeProps {
-  category: Category;
+  category: string;
   className?: string;
 }
 
 export function CategoryBadge({ category, className }: CategoryBadgeProps) {
-  const colorKey = categoryColorMap[category];
+  const colorKey = categoryColorMap[category as Category] || "cat-news";
   return (
     <span
       className={cn(
