@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Header } from "@/components/Header";
 import { HeroArticle } from "@/components/HeroArticle";
 import { ArticleCard } from "@/components/ArticleCard";
@@ -8,6 +8,15 @@ import { supabase } from "@/integrations/supabase/client";
 import { useDialect } from "@/contexts/DialectContext";
 import { Loader2 } from "lucide-react";
 import type { Tables } from "@/integrations/supabase/types";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+  PaginationEllipsis,
+} from "@/components/ui/pagination";
 
 type DBArticle = Tables<"articles">;
 
@@ -75,6 +84,31 @@ const Index = () => {
   const featured = articles[0];
   const rest = articles.slice(1);
 
+  const PAGE_SIZE = 6;
+  const [page, setPage] = useState(1);
+  const totalPages = Math.max(1, Math.ceil(rest.length / PAGE_SIZE));
+
+  useEffect(() => {
+    setPage(1);
+  }, [dialect, dbArticles.length]);
+
+  const paginated = useMemo(
+    () => rest.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE),
+    [rest, page]
+  );
+
+  const pageNumbers = useMemo(() => {
+    const pages: (number | "ellipsis")[] = [];
+    for (let i = 1; i <= totalPages; i++) {
+      if (i === 1 || i === totalPages || Math.abs(i - page) <= 1) {
+        pages.push(i);
+      } else if (pages[pages.length - 1] !== "ellipsis") {
+        pages.push("ellipsis");
+      }
+    }
+    return pages;
+  }, [totalPages, page]);
+
   if (loading) {
     return (
       <div className="min-h-screen flex flex-col bg-background">
@@ -99,6 +133,13 @@ const Index = () => {
     );
   }
 
+  const goToPage = (n: number) => {
+    setPage(Math.max(1, Math.min(totalPages, n)));
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Header />
@@ -113,10 +154,58 @@ const Index = () => {
                 {t("Најновије")}
               </h2>
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  {rest.map((article) => (
-                    <ArticleCard key={article.id} article={article} />
-                  ))}
+                <div className="lg:col-span-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    {paginated.map((article) => (
+                      <ArticleCard key={article.id} article={article} />
+                    ))}
+                  </div>
+                  {totalPages > 1 && (
+                    <Pagination className="mt-10">
+                      <PaginationContent>
+                        <PaginationItem>
+                          <PaginationPrevious
+                            href="#"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              goToPage(page - 1);
+                            }}
+                            className={page === 1 ? "pointer-events-none opacity-50" : ""}
+                          />
+                        </PaginationItem>
+                        {pageNumbers.map((p, idx) =>
+                          p === "ellipsis" ? (
+                            <PaginationItem key={`e-${idx}`}>
+                              <PaginationEllipsis />
+                            </PaginationItem>
+                          ) : (
+                            <PaginationItem key={p}>
+                              <PaginationLink
+                                href="#"
+                                isActive={p === page}
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  goToPage(p);
+                                }}
+                              >
+                                {p}
+                              </PaginationLink>
+                            </PaginationItem>
+                          )
+                        )}
+                        <PaginationItem>
+                          <PaginationNext
+                            href="#"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              goToPage(page + 1);
+                            }}
+                            className={page === totalPages ? "pointer-events-none opacity-50" : ""}
+                          />
+                        </PaginationItem>
+                      </PaginationContent>
+                    </Pagination>
+                  )}
                 </div>
                 <aside className="lg:col-span-1">
                   <PortalSidebar articles={articles} />
