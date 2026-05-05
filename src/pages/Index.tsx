@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Header } from "@/components/Header";
 import { HeroArticle } from "@/components/HeroArticle";
 import { ArticleCard } from "@/components/ArticleCard";
@@ -8,6 +8,15 @@ import { supabase } from "@/integrations/supabase/client";
 import { useDialect } from "@/contexts/DialectContext";
 import { Loader2 } from "lucide-react";
 import type { Tables } from "@/integrations/supabase/types";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+  PaginationEllipsis,
+} from "@/components/ui/pagination";
 
 type DBArticle = Tables<"articles">;
 
